@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<title>Akafin Corp</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Akafin Corp is a Chennai finance company for growing businesses. Get verified once, then request working capital in minutes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout: indigo hero lifted from the logo's own gradient, then a cool paper page;
+   products as one feature + two quieter tiles; process split into "first time" vs "every time after". */
+:root{
+  --ink:#120f24;        /* darkest stop of the logo backdrop */
+  --indigo:#362a6a;     /* the mark */
+  --violet:#2c2256;     /* backdrop corners */
+  --haze:#a99cf0;       /* highlight on dark */
+  --paper:#f6f5fa;      /* cool page ground, violet-biased */
+  --line:#dddaea;
+  --mute:#4a4563;
+  --white:#ffffff;
+  --ok:#2f8f63;
+  --display:"Outfit", "Segoe UI", system-ui, sans-serif;
+  --sans:"Outfit", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --wrap:1180px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 18px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--ink)}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--haze);outline-offset:3px;border-radius:4px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+@media (max-width:520px){.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}}
+h1,h2,h3{text-wrap:balance;margin:0}
+p{margin:0}
+.serif{font-family:var(--display);font-weight:300;letter-spacing:-.01em}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5em;min-height:50px;padding:0 24px;border-radius:999px;font:600 16px/1 var(--sans);text-decoration:none;border:1px solid transparent;cursor:pointer;transition:background .2s,border-color .2s,color .2s}
+.btn-light{background:var(--white);color:var(--ink)}
+.btn-light:hover{background:#e9e5fb}
+.btn-ghost{border-color:rgba(255,255,255,.28);color:var(--white)}
+.btn-ghost:hover{border-color:var(--white)}
+.btn-dark{background:var(--indigo);color:var(--white)}
+.btn-dark:hover{background:var(--violet)}
+.btn-line{border-color:var(--line);color:var(--ink);background:var(--white)}
+.btn-line:hover{border-color:var(--indigo)}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(18,15,36,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;height:72px}
+.brand{display:block;color:var(--white)}
+.brand svg{height:40px;width:auto;display:block}
+.nav{display:flex;gap:28px;list-style:none;margin:0;padding:0}
+.nav a{color:rgba(255,255,255,.8);text-decoration:none;font-size:16px;font-weight:600}
+.nav a:hover{color:var(--white)}
+.top-actions{display:flex;gap:10px;align-items:center}
+.top-actions .btn{min-height:42px;padding:0 18px;font-size:14px}
+.login{color:rgba(255,255,255,.8);text-decoration:none;font-size:14px;font-weight:600;padding:0 8px}
+.login:hover{color:var(--white)}
+@media (max-width:980px){.nav{display:none}}
+@media (max-width:520px){.login{display:none}.brand svg{height:28px}}
+
+/* hero */
+.hero{background:linear-gradient(118deg,#302760 0%,var(--ink) 46%,var(--ink) 58%,var(--violet) 100%);color:var(--white);overflow:hidden;position:relative}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:64px;align-items:center;padding-block:96px 104px;position:relative}
+.hero-mark{position:absolute;right:-120px;bottom:-140px;width:620px;color:rgba(169,156,240,.06);pointer-events:none}
+.hero h1{font-family:var(--display);font-weight:800;font-size:clamp(42px,6vw,80px);line-height:1;letter-spacing:-.03em}
+.hero h1 span{display:block;color:var(--haze)}
+.lede{margin-top:28px;max-width:34em;font-size:20px;line-height:1.6;color:rgba(255,255,255,.76)}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
+.hero-note{margin-top:28px;font-size:14px;color:rgba(255,255,255,.55)}
+
+/* request card */
+.req{background:var(--white);color:var(--ink);border-radius:20px;padding:28px;box-shadow:0 40px 80px -30px rgba(0,0,0,.6);min-width:0}
+.req-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.req-head b{font-size:16px;font-weight:700}
+.req-tag{font-size:12px;color:var(--mute);border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+.req-amt{margin-top:18px;font-family:var(--display);font-weight:800;font-size:44px;letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
+.req-meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;font-size:14px;color:var(--mute)}
+.req-list{list-style:none;margin:22px 0 0;padding:18px 0 0;border-top:1px solid var(--line);display:grid;gap:12px}
+.req-list li{display:grid;grid-template-columns:22px 1fr auto;align-items:center;gap:12px;font-size:15px}
+.req-list small{color:var(--mute);font-size:13px;text-align:right}
+.tick{width:22px;height:22px;border-radius:50%;background:#e7f4ee;color:var(--ok);display:grid;place-items:center}
+.tick svg{width:12px;height:12px}
+.req-foot{margin-top:22px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.req-foot span{font-size:14px;color:var(--mute)}
+.req-foot .btn{min-height:44px}
+@media (prefers-reduced-motion:no-preference){
+  .req-list li .tick{animation:pop .5s cubic-bezier(.2,.9,.3,1.4) both}
+  .req-list li:nth-child(1) .tick{animation-delay:.35s}
+  .req-list li:nth-child(2) .tick{animation-delay:.6s}
+  .req-list li:nth-child(3) .tick{animation-delay:.85s}
+  .req-list li:nth-child(4) .tick{animation-delay:1.1s}
+  @keyframes pop{from{transform:scale(.4);background:#eceaf3;color:#eceaf3}to{transform:none}}
+}
+@media (max-width:900px){.hero .wrap{grid-template-columns:1fr;gap:48px;padding-block:64px 72px}}
+@media (max-width:520px){.req{padding:22px}.req-amt{font-size:36px}.req-list small{display:none}.req-list li{grid-template-columns:22px 1fr}}
+
+/* sections */
+section{scroll-margin-top:80px}
+.sec{padding-block:112px}
+@media (max-width:700px){.sec{padding-block:72px}}
+.sec-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:end;margin-bottom:56px}
+.sec-head h2{font-family:var(--display);font-weight:700;font-size:clamp(32px,4.2vw,54px);line-height:1.05;letter-spacing:-.025em}
+.sec-head p{color:var(--mute);max-width:32em}
+@media (max-width:800px){.sec-head{grid-template-columns:1fr;gap:20px;margin-bottom:40px}}
+
+/* products */
+.prod-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.feature{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);background:var(--white);border:1px solid var(--line);border-radius:24px;overflow:hidden}
+.feature figure{margin:0;min-height:100%}
+.feature img{width:100%;height:100%;object-fit:cover;object-position:35% center}
+.feature-body{padding:48px;display:flex;flex-direction:column;gap:20px}
+.status{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;border-radius:999px;padding:5px 12px}
+.status::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.s-live{background:#e7f4ee;color:#1f6f4a}
+.s-soon{background:#eeebfa;color:var(--indigo)}
+.s-plan{background:#f0eff4;color:var(--mute)}
+.feature h3{font-family:var(--display);font-weight:700;font-size:clamp(30px,3.2vw,40px);line-height:1.1;letter-spacing:-.015em}
+.feature p{color:var(--mute)}
+.terms{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:4px}
+.terms div{padding:16px 16px 16px 0}
+.terms div+div{padding-left:16px;border-left:1px solid var(--line)}
+.terms dt{font-size:13px;color:var(--mute)}
+.terms dd{margin:4px 0 0;font-weight:600;font-size:15px}
+.feature .btn{align-self:flex-start;margin-top:auto}
+.tile{background:var(--white);border:1px solid var(--line);border-radius:24px;overflow:hidden;display:flex;flex-direction:column}
+.tile img{aspect-ratio:16/9;width:100%;object-fit:cover}
+.tile-body{padding:32px;display:flex;flex-direction:column;gap:14px;flex:1}
+.tile h3{font-family:var(--display);font-weight:700;font-size:30px;line-height:1.1;letter-spacing:-.01em}
+.tile p{color:var(--mute)}
+.tile a{margin-top:auto;align-self:flex-start;font-weight:600;font-size:15px;color:var(--indigo);text-underline-offset:4px}
+@media (max-width:900px){.feature{grid-template-columns:1fr}.feature figure{aspect-ratio:16/10}.feature-body{padding:32px}}
+@media (max-width:700px){.prod-grid{grid-template-columns:1fr}.tile-body{padding:24px}}
+@media (max-width:440px){.terms{grid-template-columns:1fr}.terms div+div{padding-left:0;border-left:0;border-top:1px solid var(--line)}}
+
+/* process */
+.process{background:var(--white);border-block:1px solid var(--line)}
+.lanes{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,1.25fr);gap:20px}
+.lane{border-radius:24px;padding:36px}
+.lane-a{background:var(--paper);border:1px solid var(--line)}
+.lane-b{background:var(--indigo);color:var(--white)}
+.lane-title{font-size:15px;font-weight:600;color:var(--mute);margin-bottom:28px}
+.lane-b .lane-title{color:var(--haze)}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;counter-reset:s}
+.lane-b .steps{grid-template-columns:1fr;counter-reset:s 3}
+.steps li{counter-increment:s;display:grid;gap:10px;align-content:start}
+.steps li::before{content:counter(s);font-family:var(--display);font-size:44px;line-height:1;font-weight:800;color:var(--indigo)}
+.lane-b .steps li::before{color:var(--white)}
+.steps b{font-size:19px;font-weight:700}
+.steps p{font-size:15px;color:var(--mute)}
+.lane-b .steps p{color:rgba(255,255,255,.75)}
+@media (max-width:980px){.lanes{grid-template-columns:1fr}}
+@media (max-width:700px){.steps{grid-template-columns:1fr}.lane{padding:28px}}
+
+/* technology */
+.tech .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:72px;align-items:start}
+.tech h2{font-family:var(--display);font-weight:700;font-size:clamp(32px,4.2vw,54px);line-height:1.05;letter-spacing:-.025em}
+.tech-intro p{margin-top:24px;color:var(--mute);max-width:30em}
+.signals{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+.signals li{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;padding:24px 0;border-bottom:1px solid var(--line)}
+.signals b{font-size:20px;font-weight:700}
+.signals p{color:var(--mute);font-size:16px}
+@media (max-width:900px){.tech .wrap{grid-template-columns:1fr;gap:40px}}
+
+/* who */
+.who{background:var(--ink);color:var(--white)}
+.who .sec-head p{color:rgba(255,255,255,.65)}
+.who-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid rgba(255,255,255,.16)}
+.who-grid div{padding:28px 24px 8px 0}
+.who-grid div+div{padding-left:24px;border-left:1px solid rgba(255,255,255,.16)}
+.who-grid b{display:block;font-size:19px;font-weight:700;margin-bottom:8px}
+.who-grid p{font-size:15px;color:rgba(255,255,255,.65)}
+.uses{margin-top:72px;display:flex;flex-wrap:wrap;gap:10px}
+.uses span{border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:10px 18px;font-size:15px;color:rgba(255,255,255,.85)}
+.uses-label{width:100%;font-size:15px;color:var(--haze);margin-bottom:6px}
+@media (max-width:900px){.who-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.who-grid div:nth-child(3){padding-left:0;border-left:0}.who-grid div:nth-child(n+3){border-top:1px solid rgba(255,255,255,.16)}}
+@media (max-width:520px){.who-grid{grid-template-columns:1fr}.who-grid div+div{padding-left:0;border-left:0;border-top:1px solid rgba(255,255,255,.16)}}
+
+/* contact */
+.contact .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:20px}
+.cta-main{background:linear-gradient(118deg,#302760 0%,var(--ink) 55%,var(--violet) 100%);color:var(--white);border-radius:28px;padding:56px;display:flex;flex-direction:column;gap:20px}
+.cta-main h2{font-family:var(--display);font-weight:700;font-size:clamp(32px,4vw,50px);line-height:1.05;letter-spacing:-.025em}
+.cta-main p{color:rgba(255,255,255,.72);max-width:30em}
+.cta-main .hero-cta{margin-top:12px}
+.cta-side{background:var(--white);border:1px solid var(--line);border-radius:28px;padding:48px;display:flex;flex-direction:column;gap:24px}
+.cta-side h3{font-family:var(--display);font-weight:700;font-size:30px;line-height:1.1}
+.cta-side p{color:var(--mute)}
+.cdl{display:grid;gap:18px;margin:0}
+.cdl dt{font-size:13px;color:var(--mute)}
+.cdl dd{margin:2px 0 0;font-size:18px;font-weight:600;word-break:break-word}
+.copy{margin-left:8px;font:600 13px var(--sans);color:var(--indigo);background:none;border:0;cursor:pointer;padding:4px}
+@media (max-width:900px){.contact .wrap{grid-template-columns:1fr}.cta-main,.cta-side{padding:36px}}
+@media (max-width:520px){.cta-main,.cta-side{padding:28px}}
+
+/* footer */
+footer{padding-block:56px 40px;color:var(--mute);font-size:14px}
+.foot-top{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding-bottom:32px;border-bottom:1px solid var(--line)}
+.foot-top svg{height:30px;width:auto;display:block}
+.foot-links{display:flex;gap:24px;flex-wrap:wrap}
+.foot-links a{text-decoration:none;color:var(--ink);font-weight:500}
+.foot-links a:hover{color:var(--indigo)}
+.legal{margin-top:28px;display:grid;gap:10px;max-width:62em;font-size:13px;line-height:1.6}
+
+/* splash */
+.splash{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:linear-gradient(118deg,#302760 0%,var(--ink) 46%,var(--ink) 58%,var(--violet) 100%);transition:opacity .5s ease,visibility .5s;animation:splash-failsafe .4s ease 4s forwards}
+.splash.is-done{opacity:0;visibility:hidden}
+.splash-in{display:grid;justify-items:center;gap:28px;width:min(320px,70vw)}
+.splash-logo{display:flex;align-items:center;gap:14px;width:100%}
+.splash-logo .m{width:30%;height:auto;flex:none}
+.splash-logo .w{width:70%;height:auto}
+.splash-bar{width:100%;height:2px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden}
+.splash-bar i{display:block;height:100%;width:100%;background:var(--haze);transform-origin:left;transform:scaleX(.15)}
+@media (prefers-reduced-motion:no-preference){
+  .splash-logo .m{animation:mark-in .8s cubic-bezier(.2,.8,.2,1) both}
+  .splash-logo .w{animation:word-in .6s ease .35s both}
+  .splash-bar i{animation:bar 1.3s cubic-bezier(.4,0,.2,1) .2s forwards}
+}
+@keyframes mark-in{from{clip-path:inset(100% 0 0 0);transform:translateY(8px)}to{clip-path:inset(0);transform:none}}
+@keyframes word-in{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+@keyframes bar{to{transform:scaleX(1)}}
+@keyframes splash-failsafe{to{opacity:0;visibility:hidden}}
+</style>
+</head>
+<body>
+
+<noscript><style>.splash{display:none}</style></noscript>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <path id="g-mark" fill-rule="evenodd" d="M16.20 188.97L15.88 188.76L16.30 188.07C16.54 187.69 17.08 186.70 17.52 185.88C17.95 185.05 18.45 184.21 18.63 184.00C18.80 183.79 19.27 183.05 19.66 182.34C20.68 180.51 23.47 175.71 25.76 171.88C26.41 170.78 27.25 169.29 27.62 168.58C27.98 167.86 28.45 167.15 28.64 166.99C28.84 166.82 29.00 166.59 29.00 166.47C29.00 166.26 29.72 164.96 31.17 162.54C31.48 162.04 31.83 161.39 31.96 161.11C32.10 160.82 32.51 160.15 32.88 159.61C33.25 159.07 33.94 157.89 34.41 157.00C34.88 156.11 36.05 154.08 37.00 152.50C37.95 150.92 39.03 149.06 39.39 148.38C39.76 147.69 40.20 146.96 40.38 146.75C40.55 146.54 41.02 145.76 41.42 145.00C41.82 144.24 42.55 143.01 43.03 142.25C43.51 141.49 44.18 140.31 44.51 139.62C44.83 138.94 45.29 138.15 45.53 137.88C45.76 137.60 46.31 136.70 46.75 135.88C47.18 135.05 48.26 133.19 49.13 131.75C50.01 130.31 51.08 128.45 51.52 127.62C51.95 126.80 52.44 125.97 52.59 125.78C52.92 125.39 54.63 122.38 54.98 121.59C55.11 121.29 55.33 120.98 55.47 120.90C55.60 120.81 56.08 119.99 56.53 119.06C56.97 118.13 57.44 117.34 57.55 117.29C57.67 117.24 57.93 116.85 58.13 116.41C58.66 115.26 60.00 112.93 60.37 112.50C60.55 112.29 61.11 111.34 61.62 110.38C62.13 109.41 63.26 107.44 64.14 106.00C65.02 104.56 65.97 102.90 66.26 102.33C66.56 101.75 66.93 101.16 67.11 101.02C67.34 100.82 109.76 100.58 115.56 100.74C116.17 100.75 116.13 101.87 115.50 102.68C115.22 103.03 115.00 103.46 115.00 103.62C115.00 103.79 114.79 104.20 114.54 104.53C114.28 104.86 113.54 106.14 112.88 107.38C112.22 108.61 111.47 109.89 111.22 110.22C110.96 110.55 110.75 110.92 110.75 111.05C110.75 111.17 110.36 111.88 109.88 112.63C109.41 113.37 108.72 114.58 108.35 115.30C107.99 116.03 107.55 116.79 107.37 117.00C107.19 117.21 106.52 118.39 105.88 119.62C105.24 120.86 104.57 122.04 104.39 122.25C104.20 122.46 103.70 123.30 103.27 124.12C102.84 124.95 102.25 126.02 101.96 126.50C101.67 126.98 101.10 127.99 100.69 128.75C100.28 129.51 99.67 130.57 99.33 131.12C98.65 132.22 96.95 135.21 95.56 137.75C95.08 138.64 94.47 139.64 94.21 139.97C93.96 140.30 93.75 140.68 93.75 140.81C93.75 140.94 93.41 141.56 92.99 142.18C92.57 142.81 92.28 143.47 92.35 143.66L92.48 144.00L117.48 144.00C134.19 144.00 142.52 143.92 142.63 143.75C142.71 143.61 142.41 142.96 141.94 142.31C141.48 141.66 140.78 140.51 140.39 139.75C139.99 138.99 139.35 137.91 138.96 137.33C138.57 136.76 138.14 136.03 138.00 135.71C137.85 135.39 137.49 134.71 137.18 134.20C133.93 128.78 133.66 128.33 133.05 127.12C132.84 126.71 132.31 125.81 131.86 125.12C131.41 124.44 130.73 123.30 130.34 122.60C128.51 119.33 126.65 116.14 125.86 114.95C125.39 114.23 125.00 113.53 125.00 113.40C125.00 113.27 124.84 112.99 124.65 112.77C124.46 112.55 123.98 111.76 123.58 111.00C123.17 110.24 122.52 109.12 122.12 108.50C121.72 107.88 121.01 106.64 120.55 105.75C120.08 104.86 119.61 104.07 119.51 104.00C119.40 103.93 118.96 103.20 118.52 102.38C118.09 101.56 117.59 100.72 117.41 100.51C117.24 100.30 116.96 99.84 116.80 99.50C116.28 98.41 114.96 96.14 114.63 95.75C114.45 95.54 114.02 94.81 113.67 94.12C112.99 92.77 109.91 87.53 109.56 87.12C109.45 86.99 109.08 86.37 108.74 85.75C107.99 84.35 105.20 79.54 104.12 77.77C102.60 75.27 101.28 72.97 100.65 71.75C100.26 70.99 99.78 70.18 99.57 69.95C99.37 69.72 98.90 68.93 98.53 68.20C98.17 67.47 97.51 66.35 97.06 65.71C96.62 65.06 96.13 64.28 95.98 63.96C95.64 63.20 94.98 62.05 94.40 61.19L93.95 60.51L94.82 59.19C95.30 58.47 95.87 57.48 96.10 57.00C96.32 56.52 96.70 55.83 96.94 55.46C97.70 54.30 99.00 52.01 99.00 51.83C99.00 51.74 99.21 51.42 99.47 51.14C99.72 50.86 100.41 49.73 100.99 48.62C101.57 47.52 102.19 46.46 102.38 46.25C102.56 46.04 103.06 45.20 103.49 44.38C103.92 43.55 104.61 42.37 105.00 41.75C105.40 41.13 105.90 40.29 106.12 39.88C106.33 39.46 106.72 38.79 107.00 38.38C107.27 37.96 107.69 37.23 107.93 36.75C108.16 36.27 108.71 35.31 109.14 34.62C109.85 33.50 110.91 31.69 114.80 25.00C115.48 23.83 116.14 22.71 116.26 22.50C116.39 22.29 117.13 21.00 117.91 19.62C118.69 18.25 119.41 17.07 119.51 17.00C119.60 16.93 119.91 16.42 120.20 15.86C120.48 15.30 120.88 14.70 121.09 14.53L121.47 14.21L122.13 15.25C122.49 15.82 122.85 16.48 122.94 16.71C123.03 16.94 123.36 17.52 123.68 18.00C124.67 19.49 124.72 19.59 125.53 21.12C125.96 21.95 126.45 22.79 126.62 23.00C126.80 23.21 127.25 23.99 127.63 24.75C128.01 25.51 128.63 26.58 129.01 27.14C129.40 27.70 130.06 28.85 130.49 29.70C130.92 30.54 131.38 31.30 131.52 31.39C131.65 31.47 132.18 32.33 132.69 33.30C133.79 35.38 134.05 35.83 134.42 36.29C134.57 36.47 135.05 37.32 135.49 38.18C135.92 39.04 136.37 39.79 136.49 39.87C136.60 39.94 137.06 40.70 137.51 41.56C137.95 42.42 138.67 43.69 139.11 44.38C139.54 45.06 140.16 46.13 140.49 46.75C140.81 47.37 141.21 48.04 141.38 48.25C141.55 48.46 142.04 49.29 142.47 50.10C142.90 50.92 143.39 51.74 143.56 51.94C143.92 52.38 144.14 52.76 145.21 54.79C145.67 55.66 146.21 56.56 146.41 56.78C146.61 57.01 147.14 57.87 147.58 58.69C148.02 59.52 149.05 61.34 149.88 62.74C150.70 64.14 151.82 66.06 152.38 67.01C152.93 67.96 154.05 69.88 154.88 71.27C155.70 72.65 156.77 74.50 157.25 75.37C157.73 76.23 158.25 77.10 158.41 77.28C158.56 77.47 159.02 78.24 159.42 79.00C159.82 79.76 160.57 81.02 161.07 81.82C161.58 82.61 162.00 83.34 162.00 83.44C162.00 83.54 162.51 84.41 163.13 85.38C163.75 86.34 164.49 87.58 164.77 88.12C165.06 88.67 165.61 89.63 166.00 90.25C166.39 90.87 167.08 92.09 167.54 92.96C168.00 93.83 168.51 94.66 168.69 94.80C168.86 94.94 169.00 95.16 169.00 95.29C169.00 95.41 169.62 96.54 170.38 97.79C171.14 99.04 171.94 100.41 172.14 100.84C172.61 101.83 173.06 102.60 173.44 103.06C173.61 103.26 174.10 104.08 174.53 104.90C174.96 105.71 175.69 106.95 176.16 107.65C176.62 108.35 177.00 108.99 177.00 109.07C177.00 109.15 177.62 110.25 178.39 111.50C179.15 112.75 179.84 113.97 179.93 114.20C180.01 114.43 180.25 114.82 180.45 115.06C180.91 115.60 181.36 116.34 181.90 117.50C182.12 117.98 182.67 118.94 183.12 119.62C183.57 120.31 184.25 121.44 184.62 122.12C185.00 122.81 185.40 123.50 185.52 123.65C185.65 123.80 186.10 124.58 186.53 125.40C186.96 126.21 187.69 127.44 188.14 128.12C188.59 128.81 189.26 129.94 189.62 130.62C189.99 131.31 191.00 133.06 191.88 134.50C192.76 135.94 193.83 137.80 194.27 138.62C194.70 139.45 195.19 140.28 195.34 140.47C195.50 140.66 196.02 141.51 196.50 142.37C198.79 146.46 200.35 149.14 200.50 149.25C200.64 149.36 202.26 152.11 206.38 159.25C206.93 160.21 208.11 162.24 209.00 163.76C209.89 165.29 211.02 167.23 211.50 168.08C211.98 168.93 212.69 170.11 213.08 170.71C213.46 171.30 213.85 171.98 213.94 172.21C214.02 172.44 214.49 173.24 214.97 174.00C215.46 174.76 216.12 175.88 216.45 176.50C216.78 177.12 217.43 178.20 217.89 178.91C218.36 179.62 218.86 180.46 218.99 180.79C219.13 181.11 219.52 181.82 219.86 182.38C221.61 185.21 222.29 186.56 222.07 186.78C221.93 186.92 211.03 187.01 194.99 187.01L168.13 187.01L167.70 186.44C167.46 186.13 167.19 185.67 167.11 185.42C167.02 185.17 166.54 184.33 166.02 183.55C165.51 182.77 165.02 181.94 164.94 181.71C164.85 181.49 164.24 180.42 163.57 179.34C162.90 178.26 162.22 177.09 162.05 176.75C161.88 176.41 161.02 174.94 160.13 173.50C159.25 172.06 158.11 170.09 157.61 169.12C157.11 168.16 156.55 167.21 156.37 167.00C156.20 166.79 155.73 166.05 155.34 165.34C153.67 162.34 152.62 160.55 151.84 159.35C151.38 158.65 150.69 157.47 150.31 156.73C149.93 155.98 149.28 154.87 148.88 154.25C148.47 153.63 147.84 152.53 147.47 151.80C147.10 151.07 146.63 150.28 146.43 150.05C146.22 149.82 145.79 149.12 145.47 148.50C144.32 146.24 143.22 144.72 142.81 144.80C142.59 144.84 142.18 145.29 141.89 145.80C141.61 146.31 140.77 147.83 140.04 149.18C139.30 150.52 138.56 151.79 138.38 152.00C138.20 152.21 137.98 152.64 137.88 152.97C137.78 153.30 137.38 154.09 136.99 154.72C136.60 155.36 135.87 156.65 135.38 157.59C134.88 158.53 134.22 159.71 133.91 160.21C133.59 160.71 132.97 161.86 132.52 162.75C132.07 163.64 131.56 164.54 131.38 164.75C131.20 164.96 130.75 165.80 130.37 166.62C129.99 167.45 129.54 168.29 129.37 168.50C129.20 168.71 128.50 169.94 127.81 171.25C126.67 173.44 125.71 175.17 122.46 181.00C121.81 182.17 120.88 183.92 120.40 184.90C119.76 186.20 119.33 186.75 118.82 186.95C118.44 187.10 115.88 187.27 113.12 187.33C110.38 187.39 102.44 187.56 95.50 187.72C67.34 188.35 58.76 188.52 45.38 188.74C21.01 189.15 16.54 189.18 16.20 188.97Z"/>
+    <path id="g-word" fill-rule="evenodd" d="M375.62 186.96C372.72 186.85 371.03 186.67 370.28 186.40C369.68 186.18 368.93 186.00 368.62 186.00C368.31 186.00 367.93 185.84 367.76 185.64C367.60 185.44 367.05 185.14 366.54 184.98C365.23 184.55 362.45 182.64 361.18 181.28C358.97 178.92 357.26 175.33 356.58 171.62L356.12 169.12L356.12 152.88L356.12 136.62L356.68 134.06C357.41 130.69 359.02 127.54 361.22 125.19C362.69 123.63 364.73 122.00 365.23 122.00C365.34 122.00 365.70 121.79 366.03 121.53C366.81 120.92 369.08 120.17 371.88 119.60L374.12 119.14L396.25 119.05C409.47 119.00 419.78 119.07 421.88 119.22C425.42 119.48 429.67 120.13 430.12 120.49C430.26 120.60 430.74 120.77 431.18 120.87C431.63 120.96 432.05 121.13 432.12 121.25C432.19 121.36 432.84 121.79 433.56 122.20C435.23 123.15 437.13 124.94 438.61 126.95C439.72 128.46 440.27 129.66 441.53 133.38L442.12 135.12L442.12 153.00L442.12 170.88L441.52 172.75C440.55 175.76 439.93 177.34 439.50 177.88C439.27 178.15 438.89 178.70 438.64 179.10C437.21 181.39 432.65 185.00 431.17 185.00C431.00 185.00 430.58 185.20 430.24 185.43C429.27 186.12 426.60 186.73 423.88 186.88C420.28 187.09 380.68 187.16 375.62 186.96ZM520.86 187.01C518.72 186.82 516.08 186.21 515.25 185.73C515.04 185.60 514.18 185.18 513.32 184.77C511.37 183.85 508.96 182.07 507.77 180.66C507.37 180.19 507.01 179.90 503.35 177.13C502.26 176.30 501.32 175.57 501.25 175.49C501.18 175.42 500.17 174.72 499.00 173.94C497.83 173.15 495.60 171.50 494.04 170.26C492.47 169.02 490.62 167.74 489.91 167.41C489.20 167.08 488.18 166.60 487.62 166.35L486.62 165.89L482.88 165.90C479.95 165.90 478.92 165.99 478.19 166.31L477.25 166.72L477.25 176.10C477.25 181.58 477.15 185.73 477.01 186.11L476.76 186.75L468.06 186.75C461.62 186.75 459.27 186.67 459.05 186.45C458.69 186.09 458.61 120.10 458.97 119.54L459.18 119.21L483.53 119.08C507.51 118.95 520.31 119.15 525.38 119.75C532.44 120.59 537.43 125.11 539.33 132.37L540.04 135.12L540.04 141.88C540.03 145.62 539.91 149.18 539.76 149.88C539.62 150.56 539.38 151.74 539.23 152.50C538.32 157.06 535.42 160.82 531.17 162.95C528.38 164.35 526.87 164.72 522.16 165.15C519.94 165.35 517.45 165.60 516.62 165.70L515.12 165.88L515.12 166.32C515.12 166.57 515.53 167.01 516.05 167.32C516.89 167.83 525.52 174.28 527.00 175.51C527.34 175.80 528.30 176.53 529.12 177.13C529.95 177.74 530.79 178.38 530.99 178.56C531.18 178.73 531.81 179.21 532.39 179.62C532.96 180.04 534.31 181.05 535.38 181.88C536.45 182.70 537.79 183.71 538.37 184.12C540.23 185.46 541.25 186.37 541.25 186.69C541.25 186.92 540.57 187.00 538.69 187.00C537.28 187.00 533.20 187.05 529.62 187.11C526.05 187.17 522.11 187.12 520.86 187.01ZM275.76 186.48C274.46 186.20 273.27 185.87 273.12 185.74C272.97 185.62 272.11 185.15 271.21 184.69C269.02 183.59 266.70 181.51 265.29 179.38C264.07 177.54 263.03 175.41 263.01 174.72C263.00 174.50 262.77 173.60 262.49 172.72L261.98 171.13L261.73 162.26C261.56 156.24 261.56 150.35 261.73 143.92L261.99 134.44L262.53 132.66C264.38 126.54 267.83 122.53 272.90 120.62C276.23 119.37 290.93 118.92 320.59 119.16L341.05 119.33L341.40 119.68L341.75 120.04L341.75 126.99C341.75 132.35 341.68 134.00 341.43 134.21C341.21 134.39 332.65 134.52 313.99 134.62C297.67 134.71 286.37 134.87 285.61 135.02C284.01 135.33 282.78 136.33 281.70 138.19L280.88 139.62L280.88 153.25L280.88 166.88L281.55 168.02C282.49 169.62 284.08 170.83 285.89 171.33L287.41 171.75L314.05 171.75L340.69 171.75L340.97 172.09C341.17 172.34 341.24 174.47 341.19 179.40L341.12 186.36L340.57 186.64C340.17 186.84 331.17 186.93 309.07 186.95L278.12 186.98L275.76 186.48ZM554.39 186.36L554.00 185.96L554.00 153.03L554.00 120.10L554.35 119.61L554.71 119.12L580.74 119.05C618.08 118.93 624.86 119.30 627.39 121.54C627.67 121.79 628.03 122.00 628.17 122.00C628.71 122.00 632.07 125.38 632.84 126.69C634.34 129.25 634.74 130.25 635.39 133.06L636.04 135.88L635.94 142.12L635.84 148.38L635.27 151.62C634.97 153.41 634.62 154.98 634.51 155.12C634.40 155.26 634.23 155.66 634.13 156.00C633.79 157.14 632.17 159.58 630.99 160.73C628.40 163.27 624.85 164.60 619.62 165.01C617.98 165.14 616.29 165.31 615.88 165.38C615.46 165.46 605.89 165.51 594.60 165.50C583.31 165.50 573.89 165.56 573.66 165.65L573.25 165.80L573.25 175.64C573.25 181.42 573.15 185.73 573.01 186.11L572.76 186.75L563.77 186.75L554.79 186.75L554.39 186.36ZM419.01 171.24C420.30 170.71 421.58 169.54 422.36 168.19L423.04 167.01L423.16 154.82C423.24 147.66 423.19 141.83 423.04 140.70C422.77 138.54 422.05 137.21 420.43 135.91L419.48 135.15L417.55 134.89C416.29 134.71 409.36 134.67 397.50 134.75L379.38 134.88L378.38 135.48C377.12 136.23 376.68 136.74 375.68 138.62L374.88 140.12L374.92 153.12L374.95 166.12L375.61 167.54C376.43 169.30 378.09 170.88 379.54 171.25C380.14 171.40 380.74 171.57 380.88 171.62C381.01 171.68 389.45 171.69 399.62 171.66L418.12 171.61L419.01 171.24ZM612.09 150.54C614.46 150.10 615.27 149.58 616.18 147.88L616.98 146.38L616.99 142.44L617.00 138.50L616.33 137.31C615.97 136.66 615.32 135.84 614.91 135.50L614.15 134.88L594.11 134.81L574.07 134.74L573.78 135.09C573.57 135.34 573.51 137.54 573.56 143.02L573.62 150.60L574.20 150.74C575.33 151.00 610.57 150.82 612.09 150.54ZM516.89 150.30C518.72 149.79 519.41 149.27 520.38 147.62L521.12 146.38L521.12 142.36L521.12 138.34L520.62 137.61C520.35 137.20 520.02 136.66 519.88 136.40C519.74 136.14 519.31 135.69 518.93 135.41L518.23 134.89L510.18 134.71C502.36 134.53 479.44 134.66 478.31 134.89L477.75 135.01L477.75 142.58C477.75 148.13 477.83 150.23 478.05 150.45C478.28 150.68 482.78 150.75 496.86 150.73L515.38 150.72L516.89 150.30ZM270.12 103.21C269.02 103.10 266.32 103.06 264.12 103.13C261.59 103.22 259.99 103.18 259.75 103.01L259.38 102.76L260.19 101.19C260.63 100.33 261.11 99.34 261.25 99.00C261.39 98.66 261.79 97.92 262.14 97.38C262.49 96.83 262.83 96.20 262.90 95.99C262.97 95.77 263.36 94.98 263.76 94.24C264.16 93.49 264.94 91.97 265.49 90.88C266.56 88.76 268.41 85.29 270.85 80.82C271.66 79.34 272.69 77.45 273.13 76.62C273.57 75.80 274.64 73.83 275.50 72.25C279.74 64.50 281.49 61.26 282.57 59.12C283.06 58.16 283.74 56.97 284.08 56.47C284.42 55.97 285.01 54.84 285.39 53.97C285.78 53.09 286.24 52.20 286.42 51.98C286.60 51.77 287.33 50.47 288.04 49.11C288.76 47.74 289.80 45.77 290.36 44.73C290.92 43.69 291.74 42.15 292.18 41.31C293.52 38.78 295.70 36.00 296.34 36.00C296.48 36.00 296.83 35.79 297.11 35.53C297.39 35.28 298.19 34.85 298.88 34.60L300.12 34.12L309.00 34.12L317.88 34.12L318.85 34.73C320.33 35.65 321.43 36.94 322.49 39.00C326.28 46.34 328.13 49.85 328.54 50.50C328.76 50.84 329.53 52.25 330.25 53.62C332.51 57.93 333.50 59.81 334.62 61.88C335.21 62.98 336.28 65.00 337.00 66.38C337.71 67.75 339.01 70.22 339.89 71.88C340.77 73.53 341.95 75.78 342.51 76.88C343.08 77.97 344.02 79.78 344.60 80.88C347.42 86.20 348.62 88.50 349.29 89.88C349.68 90.70 350.11 91.54 350.24 91.75C351.23 93.34 352.00 94.80 352.00 95.11C352.00 95.31 352.10 95.53 352.22 95.61C352.34 95.68 352.68 96.22 352.97 96.81C353.26 97.40 353.61 98.04 353.75 98.25C353.88 98.46 354.40 99.51 354.90 100.59C355.61 102.12 355.74 102.60 355.49 102.76C354.91 103.11 350.12 103.31 344.56 103.21L339.12 103.11L337.47 102.33C335.61 101.46 333.37 99.37 332.32 97.52C331.96 96.89 331.52 96.20 331.33 95.98C330.96 95.54 329.05 91.99 327.38 88.62C326.76 87.39 325.94 85.81 325.56 85.12C325.17 84.44 324.60 83.31 324.29 82.62C323.97 81.94 323.34 80.70 322.88 79.88C322.42 79.05 322.03 78.22 322.02 78.02C322.01 77.82 321.84 77.49 321.65 77.27C321.46 77.05 320.19 74.71 318.84 72.07C315.96 66.45 314.37 63.37 311.50 57.88C310.36 55.67 309.22 53.48 308.98 53.00C308.38 51.79 307.62 51.11 307.34 51.55C306.97 52.13 306.31 53.33 305.36 55.12C304.41 56.93 304.21 57.30 302.46 60.50C301.90 61.53 300.90 63.39 300.25 64.62C299.61 65.86 298.48 67.94 297.76 69.25C297.03 70.56 295.87 72.69 295.18 74.00C294.48 75.31 293.40 77.34 292.77 78.53C292.14 79.71 291.26 81.37 290.81 82.21C290.37 83.05 290.00 83.87 290.00 84.04C290.00 84.20 289.83 84.52 289.62 84.75C289.42 84.98 287.85 87.94 286.15 91.32C282.89 97.77 282.15 99.02 280.63 100.57C278.12 103.15 275.54 103.80 270.12 103.21ZM440.00 103.00L427.88 102.88L427.12 102.34C426.71 102.04 425.70 101.16 424.88 100.39C424.05 99.61 422.98 98.67 422.50 98.31C422.02 97.94 421.17 97.25 420.61 96.76C418.82 95.20 416.95 93.59 413.88 90.98C412.23 89.57 409.13 86.82 407.00 84.85C402.77 80.96 400.51 79.31 398.46 78.59C395.88 77.69 389.89 78.12 388.63 79.29C388.47 79.44 388.37 83.74 388.35 90.90C388.33 98.36 388.23 102.37 388.06 102.54C387.67 102.93 369.70 102.82 369.45 102.43C369.11 101.89 369.21 35.39 369.55 35.05C369.77 34.83 372.17 34.75 378.77 34.75L387.69 34.75L387.97 35.09C388.16 35.32 388.26 39.55 388.31 49.27L388.38 63.12L389.22 63.06C389.68 63.02 390.38 62.77 390.76 62.49C391.14 62.22 391.56 62.00 391.69 62.00C391.82 62.00 392.70 61.65 393.65 61.22C395.62 60.33 397.33 59.15 401.79 55.63C405.21 52.93 408.15 50.61 409.82 49.30C410.40 48.85 411.16 48.22 411.50 47.90C411.84 47.59 413.36 46.32 414.88 45.09C416.39 43.85 418.02 42.50 418.50 42.07C421.27 39.60 422.67 38.43 423.30 38.06C423.68 37.83 424.00 37.56 424.00 37.47C424.00 37.37 424.53 37.05 425.19 36.74C425.84 36.44 426.94 35.93 427.62 35.61C429.22 34.86 431.22 34.31 433.12 34.11C436.32 33.78 450.95 34.85 451.56 35.46C451.88 35.78 450.62 37.07 448.12 38.99C447.16 39.73 445.96 40.68 445.46 41.10C443.23 42.97 442.56 43.52 441.56 44.30C438.39 46.78 429.21 54.25 428.20 55.17C427.55 55.77 426.93 56.25 426.82 56.25C426.70 56.25 426.22 56.62 425.74 57.07C425.27 57.53 423.48 59.02 421.77 60.39C415.08 65.75 413.41 67.13 413.33 67.39C413.28 67.53 414.15 68.43 415.27 69.39C419.77 73.25 425.97 78.62 427.51 80.00C428.41 80.80 429.92 82.10 430.88 82.89C431.84 83.67 433.97 85.51 435.62 86.97C437.28 88.43 439.36 90.24 440.25 91.00C441.14 91.76 442.05 92.54 442.28 92.75C442.50 92.96 443.29 93.64 444.03 94.28C452.48 101.52 453.57 102.54 453.22 102.85C452.94 103.10 451.10 103.12 440.00 103.00ZM458.51 103.05C458.08 102.90 458.19 102.52 459.35 100.14C459.96 98.90 460.64 97.48 460.86 97.00C461.36 95.93 463.16 92.53 465.14 88.91C467.02 85.46 468.04 83.56 469.86 80.12C470.66 78.61 471.45 77.21 471.61 77.00C471.77 76.79 472.27 75.89 472.72 75.00C473.16 74.11 473.76 72.98 474.05 72.50C474.78 71.28 476.34 68.39 477.14 66.75C477.52 65.99 478.20 64.76 478.65 64.00C479.56 62.49 481.02 59.78 482.29 57.25C482.73 56.36 483.24 55.45 483.41 55.25C483.58 55.04 484.32 53.71 485.05 52.28C485.78 50.86 486.84 48.84 487.41 47.79C487.98 46.74 488.92 44.98 489.49 43.88C490.06 42.77 490.79 41.42 491.11 40.88C491.43 40.33 491.99 39.30 492.36 38.61C493.11 37.20 494.99 35.59 496.92 34.69L498.12 34.12L505.38 34.13L512.62 34.14L514.22 34.58C517.35 35.46 520.35 37.91 522.00 40.94C522.28 41.45 522.79 42.33 523.13 42.88C523.47 43.42 524.05 44.49 524.41 45.25C524.77 46.01 525.25 46.83 525.46 47.07C525.67 47.32 526.14 48.16 526.49 48.95C526.85 49.73 527.53 51.05 528.00 51.87C528.92 53.46 529.84 55.18 531.48 58.38C532.05 59.48 533.18 61.61 534.01 63.12C534.83 64.64 535.96 66.78 536.51 67.88C537.07 68.97 538.19 71.11 539.00 72.62C541.93 78.08 542.40 78.96 543.82 81.76C544.61 83.32 545.41 84.77 545.60 84.99C545.79 85.20 546.02 85.62 546.11 85.92C546.20 86.22 546.55 86.95 546.88 87.54C547.22 88.14 547.98 89.58 548.58 90.75C549.18 91.92 550.39 94.28 551.28 96.00C552.17 97.72 553.21 99.88 553.61 100.81L554.32 102.49L553.99 102.89L553.65 103.29L544.89 103.21C537.95 103.14 536.00 103.05 535.51 102.77C534.18 102.02 532.16 99.84 531.49 98.44C531.12 97.64 530.70 96.86 530.56 96.69C530.42 96.51 529.72 95.19 528.99 93.75C528.27 92.31 527.55 90.96 527.39 90.75C527.23 90.54 526.83 89.76 526.50 89.00C526.17 88.24 525.72 87.40 525.50 87.12C525.28 86.85 524.82 86.01 524.49 85.25C524.15 84.49 523.53 83.25 523.11 82.49C522.68 81.72 521.97 80.37 521.52 79.49C521.08 78.60 520.33 77.14 519.87 76.25C519.41 75.36 518.97 74.46 518.90 74.25C518.83 74.04 518.42 73.31 518.00 72.62C517.58 71.94 517.17 71.20 517.10 70.99C517.03 70.77 516.64 69.98 516.25 69.24C515.85 68.49 515.02 66.86 514.40 65.62C513.78 64.39 513.00 62.87 512.67 62.25C511.31 59.68 510.46 58.02 509.60 56.28C509.09 55.27 508.31 53.87 507.84 53.17C507.38 52.46 507.00 51.74 507.00 51.57C507.00 51.07 506.39 51.20 505.83 51.81C505.55 52.12 504.90 53.22 504.39 54.25C503.60 55.82 502.20 58.47 501.00 60.62C500.85 60.90 500.25 61.99 499.67 63.04C499.10 64.10 497.96 66.18 497.14 67.67C496.32 69.16 495.16 71.33 494.56 72.50C493.95 73.67 492.95 75.58 492.33 76.75C491.71 77.92 490.64 79.94 489.96 81.25C487.49 86.01 485.60 89.64 485.33 90.12C484.57 91.55 483.43 93.81 482.75 95.25C482.33 96.14 481.87 97.08 481.73 97.32C481.59 97.57 481.14 98.41 480.72 99.20C479.84 100.84 478.99 101.81 477.75 102.58L476.88 103.12L467.83 103.13C462.85 103.13 458.66 103.09 458.51 103.05ZM755.74 103.03L753.60 102.88L752.61 102.09C752.07 101.66 750.22 99.80 748.50 97.97C746.78 96.14 745.09 94.36 744.74 94.01C744.39 93.66 742.16 91.24 739.77 88.62C737.39 86.01 735.08 83.53 734.65 83.11C733.75 82.22 732.61 80.99 728.89 76.88C727.39 75.22 725.21 72.86 724.02 71.61C722.05 69.52 718.87 66.07 716.69 63.62C714.49 61.16 711.83 58.50 711.55 58.50C711.32 58.50 711.25 63.43 711.25 80.06C711.24 91.92 711.18 101.88 711.09 102.19L710.94 102.75L701.75 102.75L692.55 102.75L692.40 102.35C692.32 102.14 692.25 86.90 692.25 68.49L692.25 35.01L692.82 34.64L693.40 34.26L700.26 34.21L707.12 34.16L709.00 34.60C710.03 34.85 711.44 35.30 712.12 35.62C712.81 35.93 713.76 36.34 714.22 36.51C716.00 37.20 718.45 39.50 721.63 43.50C725.06 47.82 731.17 54.42 739.87 63.22C744.96 68.36 749.27 72.70 749.44 72.85C749.61 73.00 750.78 74.28 752.03 75.69C753.29 77.10 754.51 78.25 754.75 78.25C755.81 78.25 755.80 78.46 755.76 56.68C755.74 43.10 755.82 35.60 755.98 35.17L756.24 34.50L765.10 34.50L773.96 34.50L774.36 34.89L774.75 35.29L774.75 68.86L774.75 102.44L774.34 102.78C773.89 103.15 760.07 103.34 755.74 103.03ZM567.26 102.53C566.86 101.77 566.90 35.45 567.30 35.05C567.74 34.61 637.26 34.61 637.70 35.05C637.92 35.27 638.00 37.22 638.00 42.25C638.00 47.28 637.92 49.23 637.70 49.45C637.47 49.68 631.49 49.75 612.31 49.75C595.49 49.75 587.06 49.84 586.73 50.01L586.25 50.27L586.25 56.57C586.26 60.11 586.36 63.04 586.49 63.25L586.73 63.62L609.63 63.67C627.08 63.70 632.61 63.78 632.89 64.01L633.25 64.31L633.25 70.89C633.25 74.55 633.14 77.75 633.01 78.11L632.76 78.75L609.44 78.81L586.12 78.88L586.00 90.67C585.93 97.15 585.78 102.55 585.67 102.67C585.55 102.78 581.42 102.91 576.49 102.95L567.53 103.02L567.26 102.53ZM654.76 102.51L654.26 102.01L654.26 68.69C654.26 47.99 654.34 35.23 654.49 35.00L654.73 34.62L663.51 34.50C668.34 34.43 672.45 34.46 672.64 34.57L673.00 34.77L673.00 68.59C673.00 94.55 672.93 102.47 672.70 102.70C672.48 102.92 670.16 103.00 663.83 103.00L655.25 103.00L654.76 102.51Z"/>
+  </defs>
+</svg>
+
+
+<div class="splash" id="splash" aria-hidden="true">
+  <div class="splash-in">
+    <div class="splash-logo">
+      <svg class="m" viewBox="10 8 232 188"><use href="#g-mark" fill="#ffffff"/></svg>
+      <svg class="w" viewBox="250 30 532 162"><use href="#g-word" fill="#ffffff"/></svg>
+    </div>
+    <div class="splash-bar"><i></i></div>
+  </div>
+</div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Akafin Corp home">
+      <svg viewBox="10 8 772 188" role="img" aria-label="Akafin Corp"><use href="#g-mark" fill="#ffffff"/><use href="#g-word" fill="#ffffff"/></svg>
+    </a>
+    <ul class="nav">
+      <li><a href="#products">Loans</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#technology">Technology</a></li>
+      <li><a href="#who">Who we fund</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="top-actions">
+      <a class="login" href="#contact">Client login</a>
+      <a class="btn btn-light" href="#contact">Request funding</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="hero-title">
+    <svg class="hero-mark" viewBox="10 8 230 188" aria-hidden="true"><use href="#g-mark" fill="currentColor"/></svg>
+    <div class="wrap">
+      <div>
+        <h1 id="hero-title">Verified once. <span>Funded in minutes, every time after.</span></h1>
+        <p class="lede">Akafin Corp is a Chennai finance company for growing businesses. Your first assessment is thorough. After that your profile stays current, so each new working-capital request is decided in minutes.</p>
+        <div class="hero-cta">
+          <a class="btn btn-light" href="#contact">Request funding</a>
+          <a class="btn btn-ghost" href="#how">See how it works</a>
+        </div>
+        <p class="hero-note">For existing Akafin clients with an up-to-date profile. New businesses start with a one-time assessment.</p>
+      </div>
+
+      <div class="req" aria-label="Example of a repeat funding request">
+        <div class="req-head"><b>Repeat funding request</b><span class="req-tag">Example</span></div>
+        <div class="req-amt">₹25,00,000</div>
+        <div class="req-meta"><span>Supplier payment</span><span>6 months</span><span>Fortnightly repayment</span></div>
+        <ul class="req-list">
+          <li><span class="tick"><svg viewBox="0 0 12 12"><path d="M2 6.5 5 9l5-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Company profile<small>Verified</small></li>
+          <li><span class="tick"><svg viewBox="0 0 12 12"><path d="M2 6.5 5 9l5-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Bank statements<small>Current to 30 Sep</small></li>
+          <li><span class="tick"><svg viewBox="0 0 12 12"><path d="M2 6.5 5 9l5-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>GST returns<small>Filed on time</small></li>
+          <li><span class="tick"><svg viewBox="0 0 12 12"><path d="M2 6.5 5 9l5-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Repayment record<small>No missed dues</small></li>
+        </ul>
+        <div class="req-foot"><span>Nothing to re-upload</span><a class="btn btn-dark" href="#contact">Send request</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="products" aria-labelledby="products-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="products-title">Credit for your business, and soon for your household.</h2>
+        <p>We start with working capital for businesses we know well. Personal hand loans and a chit fund will follow, each launched only once it is properly registered.</p>
+      </div>
+      <div class="prod-grid">
+        <article class="feature">
+          <figure><img src="assets/urgent-working-capital.webp" alt="A factory owner checking her phone on the shop floor" loading="lazy"></figure>
+          <div class="feature-body">
+            <span class="status s-live">Available now</span>
+            <h3>Business working capital</h3>
+            <p>Short-term unsecured credit for payroll, raw material, supplier payments and new orders. We set your limit from how the business actually runs: bank statements, GST filings, receivables and work orders.</p>
+            <dl class="terms">
+              <div><dt>Tenure</dt><dd>3 to 12 months</dd></div>
+              <div><dt>Security</dt><dd>Unsecured</dd></div>
+              <div><dt>Repeat requests</dt><dd>In minutes</dd></div>
+            </dl>
+            <a class="btn btn-dark" href="#contact">Start an assessment</a>
+          </div>
+        </article>
+
+        <article class="tile">
+          <img src="assets/quick-personal-handloan.webp" alt="A young professional reviewing a loan on his phone at home" loading="lazy">
+          <div class="tile-body">
+            <span class="status s-soon">Launching soon</span>
+            <h3>Personal hand loans</h3>
+            <p>Small loans for urgent needs like a hospital bill, school fees or a family function. Apply from your phone and see every repayment date before you accept.</p>
+            <a href="#contact">Join the early list</a>
+          </div>
+        </article>
+
+        <article class="tile">
+          <img src="assets/akafin-chit-fund.webp" alt="Four women reviewing a savings plan together on a tablet" loading="lazy">
+          <div class="tile-body">
+            <span class="status s-plan">In preparation</span>
+            <h3>Akafin Chit Fund</h3>
+            <p>A chit scheme for families and businesses who save together, with every contribution, auction and payout recorded in the app. We will open it after registration under the Chit Funds Act.</p>
+            <a href="#contact">Register your interest</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec process" id="how" aria-labelledby="how-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="how-title">The work happens once. The speed stays.</h2>
+        <p>Your first request takes the time it should. Each request after that builds on what we already know about your business.</p>
+      </div>
+      <div class="lanes">
+        <div class="lane lane-a">
+          <p class="lane-title">The first time</p>
+          <ol class="steps">
+            <li><b>Tell us about the company</b><p>Registration, GSTIN, income-tax filings and the people who run the business.</p></li>
+            <li><b>Show how the business runs</b><p>Recent bank statements, receivables and confirmed work orders.</p></li>
+            <li><b>Get a clear decision</b><p>Your approved limit, the repayment schedule and the reasons behind both.</p></li>
+          </ol>
+        </div>
+        <div class="lane lane-b">
+          <p class="lane-title">Every time after</p>
+          <ol class="steps">
+            <li><b>Request again in minutes</b><p>Keep your statements current and send a request from your phone. We check what changed and decide.</p></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec tech" id="technology" aria-labelledby="tech-title">
+    <div class="wrap">
+      <div class="tech-intro">
+        <h2 id="tech-title">Software reads the paperwork. Our credit team makes the call.</h2>
+        <p>Our underwriting platform does the slow parts of lending in minutes, so the people deciding on your loan spend their time on your business, not on spreadsheets.</p>
+      </div>
+      <ul class="signals">
+        <li><b>Bank statements read line by line</b><p>Monthly inflows, cheque returns, low-balance days and customer concentration, from every account you share.</p></li>
+        <li><b>Tax and GST compliance checked</b><p>Filing regularity and turnover are matched against what your bank statements show.</p></li>
+        <li><b>Your limit reviewed every month</b><p>As your cash flow grows, your limit can grow with it, without a fresh application.</p></li>
+        <li><b>Every decision explained</b><p>You see what supports your limit, what holds it back and what would raise it.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec who" id="who" aria-labelledby="who-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="who-title">Built for the businesses that keep Chennai working.</h2>
+        <p>We lend to established firms with real order books and a banking history we can read.</p>
+      </div>
+      <div class="who-grid">
+        <div><b>Manufacturers</b><p>Engineering works, hydraulics, fabrication and component makers.</p></div>
+        <div><b>Traders and importers</b><p>Firms that pay suppliers before their buyers pay them.</p></div>
+        <div><b>Contractors</b><p>Businesses with confirmed work orders that need mobilisation funds.</p></div>
+        <div><b>Service companies</b><p>Logistics, staffing and technology firms with steady monthly billing.</p></div>
+      </div>
+      <div class="uses">
+        <p class="uses-label">What clients use it for</p>
+        <span>Payroll before a receivable clears</span>
+        <span>Raw material for a confirmed order</span>
+        <span>Supplier advances</span>
+        <span>Festive-season inventory</span>
+        <span>Mobilising a new contract</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec contact" id="contact" aria-labelledby="contact-title">
+    <div class="wrap">
+      <div class="cta-main">
+        <h2 id="contact-title">Already an Akafin client? Your next tranche is a request away.</h2>
+        <p>Sign in to see your available limit, upload this month's statements and send a request. New to Akafin? Write to us and our Chennai team will set up your assessment.</p>
+        <div class="hero-cta">
+          <a class="btn btn-light" href="#contact">Client login</a>
+          <a class="btn btn-ghost" href="mailto:hello@akafincorp.com">Email our team</a>
+        </div>
+      </div>
+      <div class="cta-side">
+        <h3>Talk to us</h3>
+        <dl class="cdl">
+          <div><dt>Email</dt><dd><span id="mail">hello@akafincorp.com</span><button class="copy" type="button" data-copy="mail">Copy</button></dd></div>
+          <div><dt>Office</dt><dd>Chennai, Tamil Nadu</dd></div>
+          <div><dt>Hours</dt><dd>Monday to Saturday, 9:30 am to 6:30 pm</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <svg viewBox="10 8 772 188" role="img" aria-label="Akafin Corp"><use href="#g-mark" fill="#362a6a"/><use href="#g-word" fill="#120f24"/></svg>
+      <nav class="foot-links" aria-label="Footer">
+        <a href="#products">Loans</a><a href="#how">How it works</a><a href="#technology">Technology</a><a href="#who">Who we fund</a><a href="#contact">Contact</a>
+      </nav>
+    </div>
+    <div class="legal">
+      <p>© 2026 Akafin Corp, Chennai. All rights reserved.</p>
+      <p>All credit is subject to eligibility, verification and approval by our credit team. Processing times in minutes apply to repeat requests from existing clients whose profile and documents are current.</p>
+      <p>Personal hand loans and the Akafin Chit Fund are not yet available. They will launch only after the required registrations are in place.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var s=document.getElementById('splash'); if(!s) return;
+  var seen=false; try{seen=sessionStorage.getItem('akf-splash')==='1'}catch(e){}
+  var hide=function(){s.classList.add('is-done');try{sessionStorage.setItem('akf-splash','1')}catch(e){}setTimeout(function(){s.remove()},600)};
+  if(seen){s.remove();return}
+  var t0=Date.now(), min=matchMedia('(prefers-reduced-motion: reduce)').matches?300:1500;
+  var go=function(){setTimeout(hide,Math.max(0,min-(Date.now()-t0)))};
+  if(document.readyState==='complete') go(); else window.addEventListener('load',go);
+})();
+document.querySelectorAll('[data-copy]').forEach(function(b){
+  b.addEventListener('click',function(){
+    var t=document.getElementById(b.dataset.copy).textContent;
+    var done=function(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy'},1600)};
+    var sel=function(){var r=document.createRange();r.selectNodeContents(document.getElementById(b.dataset.copy));var s=getSelection();s.removeAllRanges();s.addRange(r)};
+    try{navigator.clipboard.writeText(t).then(done,sel)}catch(e){sel()}
+  });
+});
+</script>
+
+</body>
+</html>
